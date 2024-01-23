@@ -1,10 +1,12 @@
-﻿using exercise.wwwapi.Models;
+﻿
+
+using exercise.wwwapi.Models.StudentModels;
 
 namespace exercise.wwwapi.Data
 {
     public class StudentCollection
     {
-        private List<Student> _students = new List<Student>()
+        private static List<Student> _students = new List<Student>()
         {
             new Student() { FirstName="Nathan",LastName="King" },
             new Student() { FirstName="Dave", LastName="Ames" }
@@ -17,9 +19,29 @@ namespace exercise.wwwapi.Data
             return student;
         }
 
-        public List<Student> getAll()
+        public List<Student> GetAllStudents()
         {
             return _students.ToList();
+        }
+        public Student GetStudent(string name)
+        {
+            return _students.FirstOrDefault(s => s.FirstName==name);
+        }
+        public Student DeleteStudent(string name)
+        {
+            var student = _students.FirstOrDefault(s => s.FirstName == name);
+            if (student != null)
+            {
+                _students.RemoveAll(s => s.FirstName==name);
+            }
+            return student;
+        }
+        public Student UpdateStudent(string name, StudentPut model)
+        {
+            var result = _students.FirstOrDefault(s =>s.FirstName==name);
+            result.FirstName = model.FirstName;
+            result.LastName = model.LastName;
+            return result;
         }
     };
 
