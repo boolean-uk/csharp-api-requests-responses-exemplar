@@ -23,11 +23,16 @@ namespace exercise.wwwapi.Endpoints
             return TypedResults.Ok(payload);
         }
         
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public static async Task<IResult> AddStudent(IRepository repository, StudentPost model)
-        {                      
-            
-            return TypedResults.Ok();
+        {     
+            var newStudent = new Student() { FirstName=model.FirstName, LastName=model.LastName };
+            var result = repository.AddStudent(newStudent);
+            if(result == null)
+            {
+                return Results.Problem("Failed to AddStudent");
+            }
+            return TypedResults.Created($"/{result.FirstName}", result);
         }
         [ProducesResponseType(StatusCodes.Status200OK)]
         public static async Task<IResult> GetAStudents(IRepository repository, string firstName)
@@ -35,6 +40,7 @@ namespace exercise.wwwapi.Endpoints
             return TypedResults.Ok();
         }
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public static async Task<IResult> DeleteStudent(IRepository repository, string firstName)
         {
             var result = repository.DeleteStudent(firstName);
