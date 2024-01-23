@@ -34,8 +34,7 @@ namespace exercise.wwwapi.Repository
 
         public Student UpdateStudent(string name, StudentPut student)
         {
-            throw new NotImplementedException();
-            //return _db.UpdateStudent(student);
+            return _db.UpdateStudent(name, student);            
         }
     }
 }

@@ -38,10 +38,10 @@ namespace exercise.wwwapi.Data
         }
         public Student UpdateStudent(string name, StudentPut model)
         {
-            var result = _students.FirstOrDefault(s =>s.FirstName==name);
-            result.FirstName = model.FirstName;
-            result.LastName = model.LastName;
-            return result;
+            var target = _students.FirstOrDefault(s =>s.FirstName==name);
+            target.FirstName = model.FirstName;
+            target.LastName = model.LastName;
+            return target;
         }
     };
 
